@@ -1,0 +1,27 @@
+name: GitHub Classroom Workflow
+
+on:
+  - push
+  - workflow_dispatch
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  build:
+    name: Autograding
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+      - uses: actions/checkout@v4
+
+      # Add the following step to set up Java 17
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - uses: education/autograding@v1
